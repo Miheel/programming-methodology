@@ -1,6 +1,7 @@
 #ifndef INT_BUFFER_HPP
 #define INT_BUFFER_HPP
 #include <cstdlib>
+
 class int_buffer
 {
 public:
@@ -11,7 +12,7 @@ public:
 	int_buffer(const int_buffer& rhs); //copy constructor
 	int_buffer(int_buffer&& rhs); //move constructor
 
-	//Move
+	//Assign
 	int_buffer& operator= (const int_buffer& rhs); //copy assign
 	int_buffer& operator= (int_buffer&& rhs); //move assign
 
@@ -30,7 +31,9 @@ public:
 	~int_buffer();
 
 private:
-	int* begin_ptr;
-	int* end_ptr;
+	void swap(int_buffer& rhs);
+
+	int* begin_ptr = nullptr;
+	int* end_ptr = nullptr;
 };
 #endif // !INT_BUFFER_HPP
