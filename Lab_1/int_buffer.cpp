@@ -1,11 +1,10 @@
 #include "int_buffer.hpp"
-#include <iostream>
 
+#ifdef _DEBUG
 #define _CRTDBG_MAP_ALLOC
 #include <stdlib.h>
 #include <crtdbg.h>
-
-#ifdef _DEBUG
+#include <iostream>
 #define DBG_NEW new ( _NORMAL_BLOCK , __FILE__ , __LINE__ )
 
 // Replace _NORMAL_BLOCK with _CLIENT_BLOCK if you want the
@@ -17,34 +16,36 @@
 int_buffer::int_buffer(size_t size) :begin_ptr(DBG_NEW int[size]), end_ptr(begin_ptr + size)
 {
 #if _DEBUG
-	std::cout << "\tConstructor 1\n";
+	std::cout << "\tint_buffer Constructor 1\n";
 #endif
-
 }
 
 int_buffer::int_buffer(const int * source, size_t size) : int_buffer(size)
 {
 #if _DEBUG
-	std::cout << "\tConstructor 2\n";
+	std::cout << "\tint_buffer Constructor 2\n";
 #endif
-
-	for (auto i = 0; i < this->size(); i++)
+	if (source != nullptr)
 	{
-		begin_ptr[i] = source[i];
+		for (auto i = 0; i < this->size(); i++)
+		{
+			begin_ptr[i] = source[i];
+		}
 	}
+
 }
 
 int_buffer::int_buffer(const int_buffer & rhs) : int_buffer(rhs.begin(), rhs.size())
 {
 #if _DEBUG
-	std::cout << "\tCopy constructor 3\n";
+	std::cout << "\tint_buffer Copy constructor 3\n";
 #endif
 }
 
 int_buffer::int_buffer(int_buffer && rhs)
 {
 #if _DEBUG
-	std::cout << "\tMove constructor 4\n";
+	std::cout << "\tint_buffer Move constructor 4\n";
 #endif
 
 	swap(rhs);
@@ -53,7 +54,7 @@ int_buffer::int_buffer(int_buffer && rhs)
 int_buffer & int_buffer::operator=(const int_buffer & rhs)
 {
 #if _DEBUG
-	std::cout << "\tCopy assign\n";
+	std::cout << "\tint_buffer Copy assign\n";
 #endif
 
 	if (this == &rhs) { return *this; }
@@ -67,7 +68,7 @@ int_buffer & int_buffer::operator=(const int_buffer & rhs)
 int_buffer & int_buffer::operator=(int_buffer && rhs)
 {
 #if _DEBUG
-	std::cout << "\tMove assign\n";
+	std::cout << "\tint_buffer Move assign\n";
 #endif
 
 	if (this == &rhs) { return *this; }
@@ -80,7 +81,7 @@ int_buffer & int_buffer::operator=(int_buffer && rhs)
 int & int_buffer::operator[](size_t size)
 {
 #if _DEBUG
-	std::cout << "\toperator []\n";
+	std::cout << "\tint_buffer operator []\n";
 #endif
 
 	return *(begin_ptr + size);
@@ -89,7 +90,7 @@ int & int_buffer::operator[](size_t size)
 const int & int_buffer::operator[](size_t size) const
 {
 #if _DEBUG
-	std::cout << "\tconst operator []\n";
+	std::cout << "\tint_buffer const operator []\n";
 #endif
 
 	return *(begin_ptr + size);
@@ -98,7 +99,7 @@ const int & int_buffer::operator[](size_t size) const
 size_t int_buffer::size() const
 {
 #if _DEBUG
-	std::cout << "\tsize\n";
+	std::cout << "\tint_buffer size\n";
 #endif
 
 	return end_ptr - begin_ptr;
@@ -107,7 +108,7 @@ size_t int_buffer::size() const
 int * int_buffer::begin()
 {
 #if _DEBUG
-	std::cout << "\tBegin\n";
+	std::cout << "\tint_buffer Begin\n";
 #endif
 
 	return begin_ptr;
@@ -116,7 +117,7 @@ int * int_buffer::begin()
 int * int_buffer::end()
 {
 #if _DEBUG
-	std::cout << "\tEnd\n";
+	std::cout << "\tint_buffer End\n";
 #endif
 
 	return end_ptr;
@@ -125,7 +126,7 @@ int * int_buffer::end()
 const int * int_buffer::begin() const
 {
 #if _DEBUG
-	std::cout << "\tConst Begin\n";
+	std::cout << "\tint_buffer Const Begin\n";
 #endif
 
 	return begin_ptr;
@@ -134,7 +135,7 @@ const int * int_buffer::begin() const
 const int * int_buffer::end() const
 {
 #if _DEBUG
-	std::cout << "\tConst End\n";
+	std::cout << "\tint_buffer Const End\n";
 #endif
 
 	return end_ptr;
@@ -143,7 +144,7 @@ const int * int_buffer::end() const
 int_buffer::~int_buffer()
 {
 #if _DEBUG
-	std::cout << "\tDestructor\n";
+	std::cout << "\tint_buffer Destructor\n";
 #endif
 
 	delete[] begin_ptr;

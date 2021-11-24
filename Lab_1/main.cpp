@@ -1,7 +1,9 @@
-#include "int_buffer.hpp"
 #include <iostream>
 #include <stdlib.h>
 #include <crtdbg.h>
+#include "int_buffer.hpp"
+#include "int_sorted.hpp"
+
 void f(int_buffer buf);
 void print_range(int_buffer buf);
 
@@ -16,54 +18,69 @@ int main()
 
 	std::cout << "ibuf\n";
 	int_buffer ibuf(5);
-	std::cout << "Load ibuf\n";
+	std::cout << "sbuf\n";
+	int_sorted sbuf(nullptr, 0);
 	int counter = 0;
+	std::cout << "\nLoad sbuf\n";
+	for (auto i = 0; i < 10; i++)
+	{
+		std::cout <<"insert counter: " << counter << "\n";
+		sbuf.insert(counter++);
+	}
+
+	for (auto e : sbuf) {
+		std::cout << e << ", ";
+	}
+
+	std::cout << "\nLoad ibuf\n";
+	getchar();
 	for (int* i = ibuf.begin(); i != ibuf.end(); i++)
 	{
 		*i = counter++;
 	}
-	std::cout << "\nprint ibuf in print_range\n";
-	print_range(ibuf);
 
-	std::cout << "\nprint ibuf in f\n";
-	f(ibuf);
+	//std::cout << "\nprint ibuf in print_range\n";
+	//print_range(ibuf);
 
-	std::cout << "\ncopy ibuf to i2\n";
-	int_buffer i2(ibuf);
+	//std::cout << "\nprint ibuf in f\n";
+	//f(ibuf);
 
-	std::cout << "\nresize ibuf to i3\n";
-	int_buffer i3(ibuf.begin(), 10);
+	//std::cout << "\ncopy ibuf to i2\n";
+	//int_buffer i2(ibuf);
 
-	std::cout << "\nprint i2\n";
-	print_range(i2);
+	//std::cout << "\nresize ibuf to i3\n";
+	//int_buffer i3(ibuf.begin(), 10);
 
-	std::cout << "\nprint i3\n";
-	print_range(i3);
+	//std::cout << "\nprint i2\n";
+	//print_range(i2);
 
-	std::cout << "\ncopy assign\n";
-	int_buffer copyTo(10);
-	std::cout << "\nBefore copy\ncopyTo\n";
-	print_range(copyTo);
-	copyTo = ibuf;
-	std::cout << "\nAfter copy\ncopyTo\n";
-	print_range(copyTo);
-	std::cout << "\nibuf\n";
-	print_range(ibuf);
+	//std::cout << "\nprint i3\n";
+	//print_range(i3);
 
-	std::cout << "\nMove constructor\n";
-	int_buffer movedTo = std::move(ibuf);
-	std::cout << "\nprint moved to\n";
-	print_range(movedTo);
-	std::cout << "\nprint ibuf\n";
-	print_range(ibuf);
+	//std::cout << "\ncopy assign\n";
+	//int_buffer copyTo(10);
+	//std::cout << "\nBefore copy\ncopyTo\n";
+	//print_range(copyTo);
+	//copyTo = ibuf;
+	//std::cout << "\nAfter copy\ncopyTo\n";
+	//print_range(copyTo);
+	//std::cout << "\nibuf\n";
+	//print_range(ibuf);
 
-	std::cout << "\nMove assign\n";
-	int_buffer movedTo2(10);
-	movedTo2 = std::move(movedTo);
-	std::cout << "\nprint moved to 2\n";
-	print_range(movedTo2);
-	std::cout << "\nprint moved to\n";
-	print_range(movedTo);
+	//std::cout << "\nMove constructor\n";
+	//int_buffer movedTo = std::move(ibuf);
+	//std::cout << "\nprint moved to\n";
+	//print_range(movedTo);
+	//std::cout << "\nprint ibuf\n";
+	//print_range(ibuf);
+
+	//std::cout << "\nMove assign\n";
+	//int_buffer movedTo2(10);
+	//movedTo2 = std::move(movedTo);
+	//std::cout << "\nprint moved to 2\n";
+	//print_range(movedTo2);
+	//std::cout << "\nprint moved to\n";
+	//print_range(movedTo);
 
 }
 

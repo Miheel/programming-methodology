@@ -1,5 +1,6 @@
 #ifndef INT_BUFFER_HPP
 #define INT_BUFFER_HPP
+
 #include <cstdlib>
 
 class int_buffer
