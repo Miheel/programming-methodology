@@ -1,11 +1,10 @@
-
 #include <utility>
+#include "int_sorted.hpp"
 
 #if _DEBUG
 #include <iostream>
 #endif
 
-#include "int_sorted.hpp"
 
 int_sorted::int_sorted(const int * source, size_t size) :buf(source, size)
 {

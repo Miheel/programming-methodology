@@ -1,3 +1,4 @@
+#include <utility>
 #include "int_buffer.hpp"
 
 #ifdef _DEBUG
@@ -27,7 +28,7 @@ int_buffer::int_buffer(const int * source, size_t size) : int_buffer(size)
 #endif
 	if (source != nullptr)
 	{
-		for (auto i = 0; i < this->size(); i++)
+		for (size_t i = 0; i < this->size(); i++)
 		{
 			begin_ptr[i] = source[i];
 		}

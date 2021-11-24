@@ -1,11 +1,25 @@
 #include <iostream>
+#include <random>
+#include <time.h>
+#include <stdlib.h>
+
+#define NC "\e[0m"
+#define RED "\e[0;31m"
+#define GRN "\e[0;32m"
+#define CYN "\e[0;36m"
+#define REDB "\e[41m"
+
+#if _DEBUG
 #include <stdlib.h>
 #include <crtdbg.h>
+#endif
+
 #include "int_buffer.hpp"
 #include "int_sorted.hpp"
 
 void f(int_buffer buf);
-void print_range(int_buffer buf);
+void print_buffer(int_buffer buf);
+void print_sorted(int_sorted buf);
 
 int main()
 {
@@ -15,72 +29,38 @@ int main()
 #else
 	std::cout << "Release\n";
 #endif
+	srand(time(NULL));
 
 	std::cout << "ibuf\n";
 	int_buffer ibuf(5);
 	std::cout << "sbuf\n";
 	int_sorted sbuf(nullptr, 0);
-	int counter = 0;
-	std::cout << "\nLoad sbuf\n";
-	for (auto i = 0; i < 10; i++)
-	{
-		std::cout <<"insert counter: " << counter << "\n";
-		sbuf.insert(counter++);
-	}
 
-	for (auto e : sbuf) {
-		std::cout << e << ", ";
-	}
+	std::cout << "\nLoad and Print ibuf f()\n";
+	f(ibuf);
 
 	std::cout << "\nLoad ibuf\n";
-	getchar();
+	int counter = 10;
 	for (int* i = ibuf.begin(); i != ibuf.end(); i++)
 	{
 		*i = counter++;
 	}
+	std::cout << "\nPrint ibuf print_buffer()\n";
+	print_buffer(ibuf);
 
-	//std::cout << "\nprint ibuf in print_range\n";
-	//print_range(ibuf);
+	std::cout << "\nLoad sbuf\n";
+	for (auto i = 0; i < 100; i++)
+	{
+		sbuf.insert(rand() % 100);
+	}
+	sbuf.insert(-1);
+	sbuf.insert(200);
 
-	//std::cout << "\nprint ibuf in f\n";
-	//f(ibuf);
-
-	//std::cout << "\ncopy ibuf to i2\n";
-	//int_buffer i2(ibuf);
-
-	//std::cout << "\nresize ibuf to i3\n";
-	//int_buffer i3(ibuf.begin(), 10);
-
-	//std::cout << "\nprint i2\n";
-	//print_range(i2);
-
-	//std::cout << "\nprint i3\n";
-	//print_range(i3);
-
-	//std::cout << "\ncopy assign\n";
-	//int_buffer copyTo(10);
-	//std::cout << "\nBefore copy\ncopyTo\n";
-	//print_range(copyTo);
-	//copyTo = ibuf;
-	//std::cout << "\nAfter copy\ncopyTo\n";
-	//print_range(copyTo);
-	//std::cout << "\nibuf\n";
-	//print_range(ibuf);
-
-	//std::cout << "\nMove constructor\n";
-	//int_buffer movedTo = std::move(ibuf);
-	//std::cout << "\nprint moved to\n";
-	//print_range(movedTo);
-	//std::cout << "\nprint ibuf\n";
-	//print_range(ibuf);
-
-	//std::cout << "\nMove assign\n";
-	//int_buffer movedTo2(10);
-	//movedTo2 = std::move(movedTo);
-	//std::cout << "\nprint moved to 2\n";
-	//print_range(movedTo2);
-	//std::cout << "\nprint moved to\n";
-	//print_range(movedTo);
+	std::cout << "\nPrint sbuf print_sorted()\n";
+	print_sorted(sbuf);
+	std::cout << "\nsbuf size: " << sbuf.size() << \
+				"\nsbuf begin: " << *sbuf.begin() <<\
+				"\nsbuf end: " << *(sbuf.end()-1) << "\n";
 
 }
 
@@ -98,7 +78,16 @@ void f(int_buffer buf)
 	std::cout << "\n";
 }
 
-void print_range(int_buffer buf)
+void print_buffer(int_buffer buf)
+{
+	for (auto e : buf)
+	{
+		std::cout << e << ", ";
+	}
+	std::cout << "\n";
+}
+
+void print_sorted(int_sorted buf)
 {
 	for (auto e : buf)
 	{
