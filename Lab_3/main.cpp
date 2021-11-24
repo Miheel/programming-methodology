@@ -1,12 +1,20 @@
-#include "p_queue.hpp"
-
+#include <iostream>
+#include <string>
 #include <stdlib.h>
 #include <time.h>
+#include "p_queue.hpp"
 
 struct Orders
 {
 	std::string name;
 	int price;
+	bool operator>=(const Orders& rhs) const
+	{
+		return this->price >= rhs.price;
+	}
+	std::string toString() {
+		return "Name: " + name + " price:" + std::to_string(price);
+	}
 };
 
 struct CompGreater
@@ -32,8 +40,18 @@ int main()
 		seller.push({ "Joakim von Anka", rand() % 15 + 15 });
 	}
 
-	
+	while (!buyer.empty() )
+	{
 
+		auto buy_tmp = buyer.pop();
+		auto sell_tmp = seller.pop();
 
+		if (buy_tmp >=sell_tmp)
+		{
+			std::cout << "Buyer " << buy_tmp.toString() << "\tSeller " << sell_tmp.toString() << "\n"; 
+		}
+	}
+
+	getchar();
 	return 0;
 }
