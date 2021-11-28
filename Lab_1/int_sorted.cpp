@@ -5,12 +5,34 @@
 #include <iostream>
 #endif
 
+int_sorted sort(const int * begin, const int * end)
+{
+	if (begin == end)
+		return int_sorted(nullptr, 0);
 
-int_sorted::int_sorted(const int * source, size_t size) :buf(source, size)
+	if (begin == end - 1)
+		return int_sorted(begin, 1);
+
+	std::ptrdiff_t half = (end - begin) / 2;
+	const int* mid = begin + half;
+
+	return sort(begin, mid).merge(sort(mid, end));
+}
+
+int_sorted::int_sorted(const int * source, size_t size) :buf(nullptr, 0)
 {
 #if _DEBUG
 	std::cout << "int_sorted_constructor\n";
 #endif
+	if (size == 1)
+	{
+		buf = int_buffer(source, 1);
+	}
+	else if( size > 1)
+	{
+	buf = sort(source, source + size).buf;
+	}
+
 }
 
 size_t int_sorted::size() const
@@ -21,16 +43,11 @@ size_t int_sorted::size() const
 void int_sorted::insert(int value)
 {
 #if _DEBUG
-	std::cout << "create int_sorted in insert\n";
+	std::cout << "Insert\n";
 #endif
-
 	int_sorted tmp(&value, 1);
 
-#if _DEBUG
-	std::cout << "move to this in insert\n";
-#endif
-
-	*this = std::move(this->merge(tmp));
+	*this = this->merge(tmp);
 }
 
 const int * int_sorted::begin() const
@@ -46,7 +63,7 @@ const int * int_sorted::end() const
 int_sorted int_sorted::merge(const int_sorted & merge_with) const
 {
 #if _DEBUG
-	std::cout << "create int_buffer in merge\n";
+	std::cout << "Merge\n";
 #endif
 
 	int_buffer merge_to(buf.size() + merge_with.size());
@@ -82,20 +99,9 @@ int_sorted int_sorted::merge(const int_sorted & merge_with) const
 		merge_to_iter++;
 	}
 
-#if _DEBUG
-	std::cout << "create int_sorted in merge\n";
-#endif
+	int_sorted new_sorted(nullptr, 0);
 
-	int_sorted new_sorted(nullptr, merge_to.size());
-
-#if _DEBUG
-	std::cout << "move in merge\n";
-#endif
-
-	new_sorted.buf = std::move(merge_to);
-#if _DEBUG
-	std::cout << "return from merge\n";
-#endif
+	new_sorted.buf = merge_to;
 	return new_sorted;
 }
 
@@ -104,5 +110,4 @@ int_sorted::~int_sorted()
 #if _DEBUG
 	std::cout << "int_sorted_destructor size:" << this->size() << "\n";
 #endif
-
 }

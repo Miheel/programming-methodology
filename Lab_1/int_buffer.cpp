@@ -1,4 +1,5 @@
 #include <utility>
+#include <algorithm>
 #include "int_buffer.hpp"
 
 #ifdef _DEBUG
@@ -26,14 +27,14 @@ int_buffer::int_buffer(const int * source, size_t size) : int_buffer(size)
 #if _DEBUG
 	std::cout << "\tint_buffer Constructor 2\n";
 #endif
-	if (source != nullptr)
-	{
-		for (size_t i = 0; i < this->size(); i++)
-		{
-			begin_ptr[i] = source[i];
-		}
-	}
-
+	//if (source != nullptr)
+	//{
+	//	for (size_t i = 0; i < this->size(); i++)
+	//	{
+	//		begin_ptr[i] = source[i];
+	//	}
+	//}
+	std::copy(source, source + size, begin_ptr);
 }
 
 int_buffer::int_buffer(const int_buffer & rhs) : int_buffer(rhs.begin(), rhs.size())
@@ -58,8 +59,6 @@ int_buffer & int_buffer::operator=(const int_buffer & rhs)
 	std::cout << "\tint_buffer Copy assign\n";
 #endif
 
-	if (this == &rhs) { return *this; }
-
 	int_buffer tmp(rhs);
 	this->swap(tmp);
 
@@ -72,10 +71,8 @@ int_buffer & int_buffer::operator=(int_buffer && rhs)
 	std::cout << "\tint_buffer Move assign\n";
 #endif
 
-	if (this == &rhs) { return *this; }
-	delete[] begin_ptr;
 	swap(rhs);
-	rhs.begin_ptr = rhs.end_ptr = nullptr;
+
 	return *this;
 }
 

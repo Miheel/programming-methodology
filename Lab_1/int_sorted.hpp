@@ -1,7 +1,6 @@
 #ifndef INT_SORTED_HPP
 #define INT_SORTED_HPP
 
-#include <cstdlib>
 #include "int_buffer.hpp"
 
 class int_sorted
@@ -29,6 +28,7 @@ public:
 	~int_sorted();
 
 private:
+
 	int_buffer buf;
 };
 #endif // !INT_SORTED_HPP
