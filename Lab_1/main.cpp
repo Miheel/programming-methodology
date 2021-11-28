@@ -1,7 +1,7 @@
 #include <iostream>
+#include <string>
 #include <chrono>
 #include <algorithm>
-#include <string>
 #include <time.h> //time
 #include <stdlib.h> //rand, srand
 #include <cstddef> //size_t, prtdiff_t
@@ -12,7 +12,7 @@
 #include <crtdbg.h>
 #endif
 
-using time_point = std::chrono::time_point<std::chrono::steady_clock>;
+//using time_point = std::chrono::time_point<std::chrono::steady_clock>;
 //using clock = std::chrono::high_resolution_clock;
 using time_duration = std::chrono::duration<double>;
 
@@ -59,17 +59,17 @@ int main()
 	//print_sorted(new_buf);
 
 	int buf_size = 400000;
-	int iterations = 100;
+	//int iterations = 100;
 	int_buffer rand_buf(buf_size);
 
 	const int_buffer const_buf(buf_size);
 	const_buf.begin();
 	rand_buf.begin();
 
-	time_point start, stop;
+	//time_point start, stop;
 	time_duration elapsed_time;
 
-#pragma region std::sort lots
+	/********************************sort with iterations********************************/
 	//std::cout << "\tBegin sorting with ins_sort\n";
 	//for (size_t i = 0; i < iterations; i++)
 	//{
@@ -77,19 +77,19 @@ int main()
 	//	{
 	//		*i = rand() % 10000;
 	//	}
-
+	//
 	//	start = clock::now();
 	//	std::sort(rand_buf.begin(), rand_buf.end());
 	//	stop = clock::now();
-
+	//
 	//	elapsed_time += (stop - start);
 	//}
-
+	//
 	//std::cout << "\tEnd sorting\n";
-	//std::cout << "\nTime to sort " << buf_size << " elements " << iterations << " times\n" \
-	//	<< "total: " << elapsed_time.count() << "s\n" \
-	//	<< "average: " << elapsed_time.count() / iterations << "s\n";
-#pragma endregion
+	//std::cout << "\nTime to sort " << buf_size << " elements " << iterations << " times\n";
+	//std::cout << "total: " << elapsed_time.count() << "s\n";
+	//std::cout << "average: " << elapsed_time.count() / iterations << "s\n";
+	/**************************************************************************/
 
 
 
@@ -101,13 +101,13 @@ int main()
 
 	/********************************Merge sort********************************/
 	std::cout << "Merge sort begin\n";
-	start = std::chrono::high_resolution_clock::now();
+	auto start = std::chrono::high_resolution_clock::now();
 	int_sorted sorted(sort(rand_buf.begin(), rand_buf.end()));
-	stop = std::chrono::high_resolution_clock::now();
+	auto stop = std::chrono::high_resolution_clock::now();
 
 	elapsed_time = stop - start;
-	std::cout << "\n\tTime to sort " << buf_size << " element\n" \
-		<< "\telapsed time: " << elapsed_time.count() << "s\n";
+	std::cout << "\n\tTime to sort " << buf_size << " element\n";
+	std::cout << "\telapsed time: " << elapsed_time.count() << "s\n";
 
 	//std::cout << "print sorted\n";
 	//print_sorted(sorted);
@@ -122,8 +122,8 @@ int main()
 	stop = std::chrono::high_resolution_clock::now();
 
 	elapsed_time = stop - start;
-	std::cout << "\n\tTime to sort " << buf_size << " element\n" \
-		<< "\telapsed time: " << elapsed_time.count() << "s\n";
+	std::cout << "\n\tTime to sort " << buf_size << " element\n";
+	std::cout << "\telapsed time: " << elapsed_time.count() << "s\n";
 
 	//std::cout << "print rand_buf\n";
 	//print_buffer(rand_buf);
@@ -133,20 +133,20 @@ int main()
 
 	/********************************Selectionsort********************************/
 	std::cout << "Selectionsort begin\n";
-	start = std::chrono::high_resolution_clock::now();
-	selectionSort(new_rand_buf.begin(), new_rand_buf.end());
-	stop = std::chrono::high_resolution_clock::now();
-
-	elapsed_time = stop - start;
-	std::cout << "\n\tTime to sort " << buf_size << " element\n" \
-		<< "\telapsed time: " << elapsed_time.count() << "s\n";
-
-	//std::cout << "print new_rand_buf\n";
-	//print_buffer(new_rand_buf);
-	buf_insight("new_rand_buf", new_rand_buf.size(), new_rand_buf.begin(), new_rand_buf.end());
+	std::cout << "Commented out to save time\n";
+	//start = std::chrono::high_resolution_clock::now();
+	//selectionSort(new_rand_buf.begin(), new_rand_buf.end());
+	//stop = std::chrono::high_resolution_clock::now();
+	//
+	//elapsed_time = stop - start;
+	//std::cout << "\n\tTime to sort " << buf_size << " element\n";
+	//std::cout << "\telapsed time: " << elapsed_time.count() << "s\n";
+	//
+	////std::cout << "print new_rand_buf\n";
+	////print_buffer(new_rand_buf);
+	//buf_insight("new_rand_buf", new_rand_buf.size(), new_rand_buf.begin(), new_rand_buf.end());
 	std::cout << "Selectionsort end\n\n";
 
-	getchar();
 }
 
 void f(int_buffer buf)
@@ -183,9 +183,9 @@ void print_sorted(int_sorted buf)
 
 void buf_insight(std::string name, size_t size, const int * begin, const int * end)
 {
-	std::cout << "\n\t" << name << " size: " << size << \
-		"\n\t" << name << " begin: " << *begin << \
-		"\n\t" << name << " end: " << *(end - 1) << "\n";
+	std::cout << "\n\t" << name << " size: " << size;
+	std::cout << "\n\t" << name << " begin: " << *begin;
+	std::cout << "\n\t" << name << " end: " << *(end - 1) << "\n";
 }
 
 void selectionSort(int * first, int * last)
