@@ -5,12 +5,12 @@
 class Cylinder:public Circle
 {
 public:
-	Cylinder(float radius, float height);
+	Cylinder(double radius, double height, const char* colour = "transparant");
 
-	float getArea() override;
-	float getVolume();
+	double getArea() override;
+	double getVolume();
 
-	float height;
+	double height;
 };
 
 #endif // !CYLINDER_HPP

@@ -6,12 +6,12 @@
 class Shape
 {
 public:
-
-	std::string getColour() const;
-	virtual float getArea() = 0;
+	explicit Shape(const char* colour);
+	const char* getColour() const;
+	virtual double getArea() = 0;
 
 private:
-	std::string colour;
+	const char* colour;
 };
 
 #endif // !SHAPE_HPP

@@ -1,16 +1,16 @@
 #include "cylinder.hpp"
 
-Cylinder::Cylinder(float radius, float height)
-	:Circle(radius), height(height)
+Cylinder::Cylinder(double radius, double height, const char* colour)
+	:Circle(radius, colour), height(height)
 {
 }
 
-float Cylinder::getArea()
+double Cylinder::getArea()
 {
 	return (2 * Circle::getArea()) + (2 * Circle::PI * Circle::radius * height);
 }
 
-float Cylinder::getVolume()
+double Cylinder::getVolume()
 {
 	return PI * Circle::radius * Circle::radius * height;
 }

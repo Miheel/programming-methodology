@@ -5,12 +5,12 @@
 class Rectangle: public Shape
 {
 public:
-	Rectangle(float width, float height);
+	Rectangle(double width, double height, const char* colour = "transparant");
 
-	float getArea() override;
+	double getArea() override;
 
-	float width;
-	float height;
+	double width;
+	double height;
 };
 
 #endif // !RECTANGLE_HPP

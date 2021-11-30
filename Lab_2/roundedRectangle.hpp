@@ -5,9 +5,9 @@
 class RoundedRectangle: public Rectangle
 {
 public:
-	RoundedRectangle(float width, float height, float radius);
+	RoundedRectangle(double width, double height, double radius, const char* colourr = "transparant");
 
-	float getArea() override;
+	double getArea() override;
 
 	Circle corner;
 };

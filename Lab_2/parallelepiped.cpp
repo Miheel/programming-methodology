@@ -1,16 +1,17 @@
 #include "parallelepiped.hpp"
 
-Parallelepiped::Parallelepiped(float width, float height, float length)
-	:Rectangle(width, height), length(length)
+Parallelepiped::Parallelepiped(double width, double height, double length, const char* colour)
+	:Rectangle(width, height, colour), length(length)
 {
 }
 
-float Parallelepiped::getArea()
+
+double Parallelepiped::getArea()
 {
 	return 2 * (length * Rectangle::width + length * Rectangle::height + Rectangle::getArea());
 }
 
-float Parallelepiped::getVolume()
+double Parallelepiped::getVolume()
 {
 	return length * Rectangle::getArea();
 }

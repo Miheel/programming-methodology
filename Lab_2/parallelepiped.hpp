@@ -5,12 +5,12 @@
 class Parallelepiped: public Rectangle
 {
 public:
-	Parallelepiped(float width, float height, float length);
+	Parallelepiped(double width, double height, double length, const char* colour = "transparant");
 
-	float getArea() override;
-	float getVolume();
+	double getArea() override;
+	double getVolume();
 
-	float length;
+	double length;
 };
 
 #endif // !PARALLELEPIPED_HPP

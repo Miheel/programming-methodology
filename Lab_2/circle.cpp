@@ -1,11 +1,12 @@
 #include "circle.hpp"
+#include <cmath>
 
-Circle::Circle(float radius)
-	:radius(radius)
+Circle::Circle(double radius, const char* colour)
+	:Shape(colour), radius(radius)
 {
 }
 
-float Circle::getArea()
+double Circle::getArea()
 {
 	return PI * radius * radius;
 }

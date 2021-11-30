@@ -1,11 +1,11 @@
 #include "rectangle.hpp"
 
-Rectangle::Rectangle(float width, float height)
-	:width(width), height(height)
+Rectangle::Rectangle(double width, double height, const char* colour)
+	:Shape(colour), width(width), height(height)
 {
 }
 
-float Rectangle::getArea()
+double Rectangle::getArea()
 {
 	return width * height;
 }
