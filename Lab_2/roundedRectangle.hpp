@@ -5,11 +5,12 @@
 class RoundedRectangle: public Rectangle
 {
 public:
-	RoundedRectangle(double width, double height, double radius, const char* colourr = "transparant");
+	RoundedRectangle(double width, double height, double radius, const char* colour = "transparant");
 
 	double getArea() override;
 
 	Circle corner;
+
 };
 
 #endif // !ROUNDEDRECANGLE_HPP
