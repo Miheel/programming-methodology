@@ -8,27 +8,35 @@ struct Orders
 {
 	std::string name;
 	int price;
-	bool operator>=(const Orders& rhs) const
+
+	friend std::ostream& operator<<(std::ostream & out, const Orders& obj)
 	{
-		return this->price >= rhs.price;
-	}
-	std::string toString() {
-		return "Name: " + name + " price:" + std::to_string(price);
+		return out << "Name: " + obj.name + " price:" + std::to_string(obj.price);
 	}
 };
 
-struct CompGreater
+template<>
+struct std::less<Orders>
 {
-	bool operator()(const Orders& lhs,const Orders& rhs) const
+	bool operator()(const Orders& lhs, const Orders&rhs) const
 	{
-		return lhs.price > rhs.price;
+		return lhs.price < rhs.price;
+	}
+};
+
+template<>
+struct std::greater_equal<Orders>
+{
+	bool operator()(const Orders& lhs, const Orders&rhs) const
+	{
+		return lhs.price >= rhs.price;
 	}
 };
 
 int main()
 {
-	srand(time(NULL));
-	p_queue<Orders, CompGreater> buyer, seller;
+	srand(static_cast<unsigned int>(time(NULL)));
+	p_queue<Orders> buyer, seller;
 
 	for (size_t i = 0; i < 7; i++)
 	{
@@ -40,15 +48,14 @@ int main()
 		seller.push({ "Joakim von Anka", rand() % 15 + 15 });
 	}
 
-	while (!buyer.empty() )
+	while (!buyer.empty())
 	{
-
 		auto buy_tmp = buyer.pop();
 		auto sell_tmp = seller.pop();
-
-		if (buy_tmp >=sell_tmp)
+		//if (buy_tmp.price >= sell_tmp.price)
+		if (std::greater_equal<Orders>{}(buy_tmp, sell_tmp))
 		{
-			std::cout << "Buyer " << buy_tmp.toString() << "\tSeller " << sell_tmp.toString() << "\n"; 
+			std::cout << "Buyer max prize " << buy_tmp << "\tSeller minimum prize " << sell_tmp << "\n";
 		}
 	}
 
