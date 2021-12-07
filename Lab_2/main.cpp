@@ -12,6 +12,7 @@ void getData(std::array<T, size> &list) {
 	{
 		std::cout << "Area: " << (*i)->getArea() << " Colour: " << (*i)->getColour() << " Type: " << typeid(**i).name() << "\n";
 	}
+	std::cout << "\n";
 }
 
 int main()
@@ -26,5 +27,12 @@ int main()
 
 	getData(shapeArr);
 
+	shapeArr.at(5) = std::make_shared<Circle>(10, "magenta");
+	shapeArr.at(6) = std::make_shared<Cylinder>(6, 11, "cyan");
+
+	getData(shapeArr);
+
+
+	getchar();
 	return 0;
 }
