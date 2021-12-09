@@ -9,7 +9,7 @@ public:
 
 	double getArea() override;
 
-	Circle corner;
+	Circle round_corner;
 
 };
 

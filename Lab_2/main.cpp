@@ -32,7 +32,5 @@ int main()
 
 	getData(shapeArr);
 
-
-	getchar();
 	return 0;
 }
