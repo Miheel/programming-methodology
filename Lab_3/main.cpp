@@ -24,18 +24,10 @@ struct std::less<Orders>
 	}
 };
 
-template<>
-struct std::greater_equal<Orders>
-{
-	bool operator()(const Orders& lhs, const Orders&rhs) const
-	{
-		return lhs.price >= rhs.price;
-	}
-};
-
 int main()
 {
 	srand(static_cast<unsigned int>(time(NULL)));
+
 	p_queue<Orders> buyer, seller;
 
 	for (size_t i = 0; i < 7; i++)
@@ -47,18 +39,20 @@ int main()
 		seller.push({ "Jarl Wallenburg", rand() % 15 + 15 });
 		seller.push({ "Joakim von Anka", rand() % 15 + 15 });
 	}
-
-	while (!buyer.empty())
+	
+	while (!buyer.empty() && !seller.empty())
 	{
 		auto buy_tmp = buyer.pop();
 		auto sell_tmp = seller.pop();
-		//if (buy_tmp.price >= sell_tmp.price)
-		if (std::greater_equal<Orders>{}(buy_tmp, sell_tmp))
+		if (buy_tmp.price >= sell_tmp.price)
 		{
 			std::cout << "Buyer max prize " << buy_tmp << "\tSeller minimum prize " << sell_tmp << "\n";
 		}
+		else
+		{
+			seller.push(sell_tmp);
+		}
 	}
 
-	getchar();
 	return 0;
 }
