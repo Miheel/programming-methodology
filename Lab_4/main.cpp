@@ -39,7 +39,5 @@ int main()
 	std::cout << "\nAfter SortSubject\n";
 	print_vec(mailBox);
 
-	getchar();
-
 	return 0;
 }

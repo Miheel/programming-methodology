@@ -1,6 +1,8 @@
 #ifndef MAILBOX_HPP
 #define MAILBOX_HPP
+
 #include <vector>
+#include <cstddef>
 #include "email.hpp"
 
 using email_vec = std::vector<Email>;

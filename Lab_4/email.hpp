@@ -1,6 +1,8 @@
 #ifndef EMAIL_HPP
 #define EMAIL_HPP
+
 #include <string>
+#include <ostream>
 
 class Email
 {
