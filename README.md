@@ -1,16 +1,16 @@
 # programming-methodology
 
 ## lab 1
-buffer and array
+RAII. buffer and array
 
 ## lab 2
-polymorphism
+Classes, inheritance, virtual functions and polymorphism
 
 ## lab 3
 queue
 
 ## lab 4
-funktion objects
+STL vector container, function objects
 
 ## lab 5
-various STL funktion
+STL generic algorithms
